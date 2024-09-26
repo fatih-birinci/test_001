@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./packages/backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    environment:
+      # update!
+      - DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+
+  frontend:
+    build: ./packages/frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    environment:
+      - API_URL=http://backend:8080/api
+
+networks:
+  app-network:
+    driver: bridge
